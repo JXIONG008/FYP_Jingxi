@@ -18,15 +18,12 @@ from .pipelines import Compose
 
 class BaseDataset(Dataset, metaclass=ABCMeta):
     """Base class for datasets.
-
     All datasets to process video should subclass it.
     All subclasses should overwrite:
-
     - Methods:`load_annotations`, supporting to load information from an
     annotation file.
     - Methods:`prepare_train_frames`, providing train data.
     - Methods:`prepare_test_frames`, providing test data.
-
     Args:
         ann_file (str): Path to the annotation file.
         pipeline (list[dict | callable]): A sequence of data transforms.
@@ -143,7 +140,6 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
                  logger=None,
                  **deprecated_kwargs):
         """Perform evaluation for common datasets.
-
         Args:
             results (list): Output results.
             metrics (str | sequence[str]): Metrics to be performed.
@@ -155,7 +151,6 @@ class BaseDataset(Dataset, metaclass=ABCMeta):
                 Default: None.
             deprecated_kwargs (dict): Used for containing deprecated arguments.
                 See 'https://github.com/open-mmlab/mmaction2/pull/286'.
-
         Returns:
             dict: Evaluation results dict.
         """

@@ -90,12 +90,14 @@ evaluation = dict(
 
 # optimizer
 optimizer = dict(
-    lr=0.00075,  # this lr is used for 8 gpus
+    lr=0.0001,  # this lr is used for 8 gpus adjusted alr
 )
 # learning policy
 lr_config = dict(policy='step', step=[10, 20])
-total_epochs = 25
+total_epochs = 100
+checkpoint_config = dict(interval=10)
+log_config = dict(interval=5, hooks=[dict(type='TextLoggerHook')])
 
-load_from = 'https://download.openmmlab.com/mmaction/recognition/tsm/tsm_r50_256p_1x1x16_50e_kinetics400_rgb/tsm_r50_256p_1x1x16_50e_kinetics400_rgb_20201010-85645c2a.pth'  # noqa: E501
+#load_from = 'https://download.openmmlab.com/mmaction/recognition/tsm/tsm_r50_256p_1x1x16_50e_kinetics400_rgb/tsm_r50_256p_1x1x16_50e_kinetics400_rgb_20201010-85645c2a.pth'  # noqa: E501
 # runtime settings
 work_dir = './work_dirs/tsm_k400_pretrained_r50_1x1x16_25e_ucf101_rgb/'

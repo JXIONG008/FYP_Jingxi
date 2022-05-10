@@ -47,6 +47,7 @@ class VideoDataset(BaseDataset):
         video_infos = []
         with open(self.ann_file, 'r') as fin:
             for line in fin:
+                print(line)
                 line_split = line.strip().split()
                 if self.multi_class:
                     assert self.num_classes is not None
@@ -57,5 +58,6 @@ class VideoDataset(BaseDataset):
                     label = int(label)
                 if self.data_prefix is not None:
                     filename = osp.join(self.data_prefix, filename)
+                    print(filename)
                 video_infos.append(dict(filename=filename, label=label))
         return video_infos

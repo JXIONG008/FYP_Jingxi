@@ -1,4 +1,5 @@
 # Copyright (c) OpenMMLab. All rights reserved.
+# Copyright (c) OpenMMLab. All rights reserved.
 import torch.nn as nn
 from mmcv.cnn import ConvModule, constant_init, kaiming_init
 from mmcv.runner import _load_checkpoint, load_checkpoint
@@ -11,7 +12,6 @@ from ..builder import BACKBONES
 
 class BasicBlock(nn.Module):
     """Basic block for ResNet.
-
     Args:
         inplanes (int): Number of channels for the input in first conv2d layer.
         planes (int): Number of channels produced by some norm/conv2d layers.
@@ -79,10 +79,8 @@ class BasicBlock(nn.Module):
 
     def forward(self, x):
         """Defines the computation performed at every call.
-
         Args:
             x (torch.Tensor): The input data.
-
         Returns:
             torch.Tensor: The output of the module.
         """
@@ -102,7 +100,6 @@ class BasicBlock(nn.Module):
 
 class Bottleneck(nn.Module):
     """Bottleneck block for ResNet.
-
     Args:
         inplanes (int):
             Number of channels for the input feature in first conv layer.
@@ -186,10 +183,8 @@ class Bottleneck(nn.Module):
 
     def forward(self, x):
         """Defines the computation performed at every call.
-
         Args:
             x (torch.Tensor): The input data.
-
         Returns:
             torch.Tensor: The output of the module.
         """
@@ -231,7 +226,6 @@ def make_res_layer(block,
                    act_cfg=None,
                    with_cp=False):
     """Build residual layer for ResNet.
-
     Args:
         block: (nn.Module): Residual module to be built.
         inplanes (int): Number of channels for the input feature in each block.
@@ -247,7 +241,6 @@ def make_res_layer(block,
         act_cfg (dict | None): Config for activate layers. Default: None.
         with_cp (bool): Use checkpoint or not. Using checkpoint will save some
             memory while slowing down the training speed. Default: False.
-
     Returns:
         nn.Module: A residual layer for the given config.
     """
@@ -296,7 +289,6 @@ def make_res_layer(block,
 @BACKBONES.register_module()
 class ResNet(nn.Module):
     """ResNet backbone.
-
     Args:
         depth (int): Depth of resnet, from {18, 34, 50, 101, 152}.
         pretrained (str | None): Name of pretrained model. Default: None.
@@ -421,7 +413,6 @@ class ResNet(nn.Module):
     def _load_conv_params(conv, state_dict_tv, module_name_tv,
                           loaded_param_names):
         """Load the conv parameters of resnet from torchvision.
-
         Args:
             conv (nn.Module): The destination conv module.
             state_dict_tv (OrderedDict): The state dict of pretrained
@@ -446,7 +437,6 @@ class ResNet(nn.Module):
     @staticmethod
     def _load_bn_params(bn, state_dict_tv, module_name_tv, loaded_param_names):
         """Load the bn parameters of resnet from torchvision.
-
         Args:
             bn (nn.Module): The destination bn module.
             state_dict_tv (OrderedDict): The state dict of pretrained
@@ -530,10 +520,8 @@ class ResNet(nn.Module):
 
     def forward(self, x):
         """Defines the computation performed at every call.
-
         Args:
             x (torch.Tensor): The input data.
-
         Returns:
             torch.Tensor: The feature of the input samples extracted
             by the backbone.

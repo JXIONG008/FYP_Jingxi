@@ -2,7 +2,7 @@
 from .backbones import (C3D, STGCN, X3D, MobileNetV2, MobileNetV2TSM, ResNet,
                         ResNet2Plus1d, ResNet3d, ResNet3dCSN, ResNet3dLayer,
                         ResNet3dSlowFast, ResNet3dSlowOnly, ResNetAudio,
-                        ResNetTIN, ResNetTSM, TANet, TimeSformer)
+                        ResNetTIN, ResNetTSM, TANet, TimeSformer, ResNeXt,ResNeXtTSM)
 from .builder import (BACKBONES, DETECTORS, HEADS, LOCALIZERS, LOSSES, NECKS,
                       RECOGNIZERS, build_backbone, build_detector, build_head,
                       build_localizer, build_loss, build_model, build_neck,
@@ -13,7 +13,7 @@ from .common import (LFB, TAM, Conv2plus1d, ConvAudio,
 from .heads import (ACRNHead, AudioTSNHead, AVARoIHead, BaseHead, BBoxHeadAVA,
                     FBOHead, I3DHead, LFBInferHead, SlowFastHead, STGCNHead,
                     TimeSformerHead, TPNHead, TRNHead, TSMHead, TSNHead,
-                    X3DHead)
+                    X3DHead, ResHead)
 from .localizers import BMN, PEM, TEM
 from .losses import (BCELossWithLogits, BinaryLogisticRegressionLoss, BMNLoss,
                      CBFocalLoss, CrossEntropyLoss, HVULoss, NLLLoss,
@@ -40,5 +40,5 @@ __all__ = [
     'FBOHead', 'LFBInferHead', 'TRNHead', 'NECKS', 'TimeSformer',
     'TimeSformerHead', 'DividedSpatialAttentionWithNorm',
     'DividedTemporalAttentionWithNorm', 'FFNWithNorm', 'ACRNHead', 'BaseGCN',
-    'SkeletonGCN', 'CBFocalLoss'
+    'SkeletonGCN', 'CBFocalLoss','ResNeXt','ResNeXtTSM','ResHead'
 ]

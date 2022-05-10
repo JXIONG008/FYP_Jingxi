@@ -1,12 +1,31 @@
 _base_ = [
-    '../../_base_/models/tsm_r50.py', '../../_base_/schedules/sgd_tsm_50e.py',
+     '../../_base_/schedules/sgd_tsm_50e.py',
     '../../_base_/default_runtime.py'
 ]
 
 # model settings
 model = dict(
-    backbone=dict(num_segments=8),
-    cls_head=dict(num_classes=101, num_segments=8))
+    type='Recognizer2D',
+    backbone=dict(
+        type='ResNeXtTSM',
+        depth=50,
+        num_stages=4,
+        out_indices=(3, ),
+        groups=32,
+        width_per_group=4,
+        style='pytorch'),
+        cls_head=dict(
+        type='TSMHead',
+        num_classes=101,
+        in_channels=2048,
+        spatial_type='avg',
+        consensus=dict(type='AvgConsensus', dim=1),
+        dropout_ratio=0.4,
+        init_std=0.01,
+        num_segments=8),
+    test_cfg=dict(average_clips=None)
+)
+    
 
 # dataset settings
 dataset_type = 'RawframeDataset'
@@ -17,7 +36,7 @@ ann_file_train = f'data/ucf101/ucf101_train_split_{split}_rawframes.txt'
 ann_file_val = f'data/ucf101/ucf101_val_split_{split}_rawframes.txt'
 ann_file_test = f'data/ucf101/ucf101_val_split_{split}_rawframes.txt'
 img_norm_cfg = dict(
-    mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_bgr=False)
+    mean=[123.675, 16.28, 103.53], std=[58.395, 57.12, 57.375], to_bgr=False)
 
 train_pipeline = [
     dict(type='SampleFrames', clip_len=1, frame_interval=1, num_clips=8),
@@ -90,12 +109,15 @@ evaluation = dict(
 
 # optimizer
 optimizer = dict(
-    lr=0.0015,  # this lr is used for 8 gpus
+    lr=0.0002,  # this lr is used for 8 gpus
 )
 # learning policy
 lr_config = dict(policy='step', step=[10, 20])
-total_epochs = 25
+total_epochs = 100
+checkpoint_config = dict(interval=10)
+log_config = dict(interval=5, hooks=[dict(type='TextLoggerHook')])
 
-load_from = 'https://download.openmmlab.com/mmaction/recognition/tsm/tsm_r50_256p_1x1x8_50e_kinetics400_rgb/tsm_r50_256p_1x1x8_50e_kinetics400_rgb_20200726-020785e2.pth'  # noqa: E501
+#load_from = 'https://download.openmmlab.com/mmaction/recognition/tsm/tsm_r50_256p_1x1x8_50e_kinetics400_rgb/tsm_r50_256p_1x1x8_50e_kinetics400_rgb_20200726-020785e2.pth'  # noqa: E501
+#load_from = ('https://download.openmmlab.com/mmclassification/v0/resnext/resnext50_32x4d_b32x8_imagenet_20210429-56066e27.pth')
 # runtime settings
-work_dir = './work_dirs/tsm_k400_pretrained_r50_1x1x8_25e_ucf101_rgb/'
+work_dir = './work_dirs/tsm_k400_pretrained_resnext_1x1x8_25e_hmdb51_rgb/'

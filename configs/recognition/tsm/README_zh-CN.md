@@ -182,3 +182,7 @@ python tools/test.py configs/recognition/tsm/tsm_r50_1x1x8_50e_kinetics400_rgb.p
 ```
 
 更多测试细节，可参考 [基础教程](/docs_zh_CN/getting_started.md#测试某个数据集) 中的 **测试某个数据集** 部分。
+
+python tools/test.py configs/recognition/tsm/tsm_r50_1x1x8_50e_kinetics400_rgb.py \
+    checkpoints/SOME_CHECKPOINT.pth --eval top_k_accuracy mean_class_accuracy \
+    --out result.json

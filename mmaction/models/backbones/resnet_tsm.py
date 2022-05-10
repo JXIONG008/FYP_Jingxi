@@ -8,6 +8,7 @@ from ..builder import BACKBONES
 from .resnet import ResNet
 
 
+
 class NL3DWrapper(nn.Module):
     """3D Non-local wrapper for ResNet50.
 
@@ -66,6 +67,7 @@ class TemporalShift(nn.Module):
         Returns:
             torch.Tensor: The output of the module.
         """
+        
         x = self.shift(x, self.num_segments, shift_div=self.shift_div)
         return self.net(x)
 
